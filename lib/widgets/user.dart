@@ -1,10 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:moviez/bluePrints/details.dart';
-
-//import 'package:intl/intl.dart';
-List<Details> gate = [
-  Details(userName: 'Inifome', passWord: '12345'),
-];
 
 //
 class LogInView extends StatelessWidget {

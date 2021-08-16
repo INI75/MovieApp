@@ -8,17 +8,6 @@ import 'package:moviez/widgets/checkOut.dart';
 class MyMovie extends StatelessWidget {
   static const route = '/film';
 
-  Image image;
-  String title;
-  double rating;
-  String story;
-  int seat;
-
-  MyMovie.A(
-      {@required this.image,
-      @required this.title,
-      @required this.rating,
-      @required this.story});
   MyMovie();
 
   @override
@@ -36,7 +25,7 @@ class MyMovie extends StatelessWidget {
         ),
         //
         title: Text(
-          title,
+          'title',
           style: TextStyle(
             fontSize: 15,
             fontWeight: FontWeight.bold,
@@ -60,7 +49,7 @@ class MyMovie extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Container(
-              child: image,
+              child: Image.asset(''),
               margin: EdgeInsets.fromLTRB(0, 0, 0, 0),
               height: 300,
               width: 250,
@@ -70,7 +59,7 @@ class MyMovie extends StatelessWidget {
             ),
             Center(
               child: Text(
-                'Rating Number' + rating.toString(),
+                '',
                 style: TextStyle(fontSize: 20),
               ),
             ),
@@ -137,14 +126,7 @@ class MyMovie extends StatelessWidget {
                 ),
               ],
             ),
-            SizedBox(
-              height: 15,
-            ),
-
-            //
-
-            //
-
+            SizedBox(height: 15),
             Container(
               width: double.infinity,
               child: Text(
@@ -152,13 +134,9 @@ class MyMovie extends StatelessWidget {
                 style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
               ),
             ),
-            SizedBox(
-              height: 25,
-            ),
-            //
-            // write each movie storey
+            SizedBox(height: 25),
             Text(
-              story,
+              '',
               style: TextStyle(
                 color: Colors.grey,
               ),
@@ -176,16 +154,6 @@ class MyMovie extends StatelessWidget {
                 ),
                 TextButton(
                   onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => Checkout(
-                                image: image,
-                                rating: rating,
-                                story: story,
-                                title: title,
-                              )),
-                    );
                     //
                   },
                   child: Text('Booking'),

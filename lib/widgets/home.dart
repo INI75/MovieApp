@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:moviez/provider/movie_provider.dart';
 import 'package:moviez/widgets/movie.dart';
+import 'package:provider/provider.dart';
 
 class HomePage extends StatelessWidget {
   static const route = '/homepage';
@@ -124,69 +126,89 @@ class VerticalScrollView extends StatelessWidget {
 class HorizontalScrollView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return ListView(
-      children: [
-        for (var i = 0; i < 4; i++)
-          GestureDetector(
-            onTap: () {
-              Navigator.of(context).pushNamed(MyMovie.route);
-            },
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Container(
-                  height: 250,
-                  width: 150,
-                  decoration: BoxDecoration(
-                    color: Colors.black12,
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      Expanded(
-                        flex: 5,
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(10),
-                          child: Image.asset(
-                            'assets/mag.jpg',
-                            fit: BoxFit.cover,
+    return FutureBuilder(
+      future: Provider.of<MovieProvider>(context, listen: false).getMovies(),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return Center(
+            child: CircularProgressIndicator(),
+          );
+        } else {
+          return Consumer<MovieProvider>(
+            builder: (context, value, child) => ListView(
+              children: [
+                for (var i = 0; i < value.movies.length; i++)
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.of(context).pushNamed(MyMovie.route);
+                    },
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Container(
+                          height: 250,
+                          width: 150,
+                          decoration: BoxDecoration(
+                            color: Colors.black12,
+                            borderRadius: BorderRadius.circular(10),
                           ),
-                        ),
-                      ),
-                      Expanded(
-                        flex: 2,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.stretch,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            SizedBox(height: 3),
-                            Text(
-                              'Lorem ipsum',
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.stretch,
+                            children: [
+                              Expanded(
+                                flex: 5,
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(10),
+                                  child: Image.network(
+                                    value.movies[i].poster,
+                                    fit: BoxFit.cover,
+                                  ),
+                                ),
                               ),
-                            ),
-                            SizedBox(height: 3),
-                            Text(
-                              'Movie rating ',
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                fontSize: 10,
-                                color: Colors.black26,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            )
-                          ],
-                        ),
-                      )
-                    ],
-                  )),
+                              Expanded(
+                                flex: 2,
+                                child: Column(
+                                  crossAxisAlignment:
+                                      CrossAxisAlignment.stretch,
+                                  children: [
+                                    SizedBox(height: 3),
+                                    Expanded(
+                                      flex: 2,
+                                      child: Text(
+                                        value.movies[i].title,
+                                        maxLines: 2,
+                                        overflow: TextOverflow.ellipsis,
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(
+                                          fontSize: 15,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                    ),
+                                    SizedBox(height: 3),
+                                    Expanded(
+                                      child: Text(
+                                        value.movies[i].voteCount.toString(),
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(
+                                          fontSize: 10,
+                                          color: Colors.black26,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              )
+                            ],
+                          )),
+                    ),
+                  ),
+              ],
+              scrollDirection: Axis.horizontal,
             ),
-          ),
-      ],
-      scrollDirection: Axis.horizontal,
+          );
+        }
+      },
     );
   }
 }

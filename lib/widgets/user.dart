@@ -94,9 +94,7 @@ class LogInView extends StatelessWidget {
     );
   }
 }
-//
 
-//
 class SignInView extends StatelessWidget {
   static const route = '/sign';
   String username;

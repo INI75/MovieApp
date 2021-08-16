@@ -115,12 +115,9 @@ class MyMovie extends StatelessWidget {
                         ],
                       ),
                       IconButton(
-                          icon: Icon(Icons.keyboard_arrow_right_outlined),
-                          onPressed: () {
-                            // DropdownMenuItem(
-                            //   child: SingleChildScrollView(child: ,),
-                            // );
-                          })
+                        icon: Icon(Icons.keyboard_arrow_right_outlined),
+                        onPressed: () {},
+                      ),
                     ],
                   ),
                 ),
